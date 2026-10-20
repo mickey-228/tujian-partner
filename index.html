@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>你的理想伴侣图鉴</title>
+<link rel="stylesheet" href="assets/crayon.css">
+</head>
+<body data-theme="partner">
+<main class="wrap">
+
+  <section id="s-start">
+    <header class="masthead">
+      <span class="kicker" id="kicker"></span>
+      <h1 id="title"></h1>
+      <p class="lede" id="intro"></p>
+      <div class="meta">
+        <span><b id="qTotal">14</b> <span id="qUnit">题</span></span>
+        <span>约 4 分钟</span>
+        <span>无标准答案</span>
+      </div>
+    </header>
+    <div class="card">
+      <span class="tape"></span>
+      <p class="lede" id="startNote"></p>
+      <button class="btn" id="start"><span id="startLabel"></span> ✏️</button>
+    </div>
+  </section>
+
+  <section id="s-quiz" class="hidden">
+    <div class="card">
+      <span class="tape tl"></span>
+      <div class="progress">
+        <span class="num" id="pnum"></span>
+        <span class="bar"><i class="fill" id="pfill" style="width:7%"></i></span>
+      </div>
+      <span class="qtag" id="qtag"></span>
+      <div class="q" id="qtext"></div>
+      <div class="opts" id="opts"></div>
+      <div class="nav">
+        <button class="btn prev" id="prevBtn">← 上一题</button>
+        <button class="btn" id="nextBtn"><span class="lbl">下一题</span> →</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="s-result" class="hidden">
+    <div class="card">
+      <span class="tape tr"></span>
+      <div class="result-head">
+        <div class="plate" id="plate"></div>
+        <span class="rcode" id="rcode"></span>
+        <div class="rname" id="rname"></div>
+        <div class="rtag" id="rtag"></div>
+      </div>
+      <p class="portrait" id="portrait"></p>
+      <div class="detail" id="rdetail"></div>
+      <div class="match" id="rmatch"></div>
+      <div class="quote" id="rquote"></div>
+      <div class="bars">
+        <div class="bars-title">四型得分分布</div>
+        <div id="rbars"></div>
+      </div>
+      <div class="cta" id="rcta"></div>
+      <p class="disclaim" id="disclaimer"></p>
+      <button class="btn ghost" id="again">↺ 再测一次</button>
+    </div>
+  </section>
+
+  <div class="footer">图鉴系列 · 理想伴侣图鉴<br>趣味自测 · 不构成诊断</div>
+</main>
+
+<script>
+window.QUIZ = {
+  kicker: "情爱图鉴 · 第贰册｜择伴",
+  title: "你的理想伴侣图鉴",
+  intro: "你真正需要的那个人，<em>长什么样</em>？<br>十四道题，照见你在爱里最要命的那个需求。",
+  startNote: "这一册收录 <b>港湾 · 烟火 · 同行 · 自在</b> 四种你需要的人。别选「应该有」的，选你真正想要的那个。",
+  startLabel: "翻开图鉴",
+  scoreUnit: " 分",
+  matchTitle: "你最适合的人",
+  matchLabels: { good: "最合得来", bad: "最容易互相消耗" },
+  disclaimer: "<b>说明</b> 本测试为趣味自测，描述的是你当前<b>更偏好</b>的关系需求，不是择偶标准，也不代表你不适合其他类型；人是会随经历变化的。",
+  results: {
+    ha: { glyph:"🏮", code:"NO.30 · 依恋型", name:"港湾型", tag:"要一个稳稳接住我的人",
+      portrait:"你要的不多，但要得很实——一个情绪稳定、说到做到、会一直在的人。你不喜欢患得患失。比起惊喜，你更需要「每天醒来 TA 都在」的踏实。",
+      detail:[
+        ["你平时会这样", ["更看重陪伴的稳定，而不是一时的心动","需要对方回应及时、态度明确","受不了忽冷忽热和暧昧不清","规划未来时，希望对方也在里面"]],
+        ["为什么会这样", "对你来说，安全感不是加分项，是入场券。稳定的关系让你有余力去做自己。"],
+        ["怎么对自己更好", ["直接说出你需要「确定感」，别让对方去猜","别把「稳定」误解成「没情绪」——稳定的人也值得你主动靠近"]],
+        ["要警惕", "只追求「不出错」的关系，容易忽略自己真正的心动。"]
+      ],
+      match:{ best:"同样要稳定的港湾型——你们会把日子过成一个家的样子。", worst:"自在型——你要黏，TA 要空间，最后两个人都委屈。" },
+      quote:"你要的不是惊喜，是确定。" },
+    fw: { glyph:"🎇", code:"NO.31 · 激情型", name:"烟火型", tag:"要一个能让我心跳的人",
+      portrait:"你受不了平淡。你要的是那种一见面就有电、一句话就能让你笑的人。稳定固然好，但如果没有心动，你宁愿不要——你要的是活着的感觉。",
+      detail:[
+        ["你平时会这样", ["被有趣、有才华、有故事的人吸引","平淡期一到，就开始怀疑还爱不爱","喜欢仪式感、惊喜、说走就走","比起「合适」，更信「感觉」"]],
+        ["为什么会这样", "你靠新鲜感和情绪起伏确认自己还在恋爱——火花是你的燃料，熄了就慌。"],
+        ["怎么对自己更好", ["分清「心动」和「心动带来的不安」，后者不是爱","让关系持续制造新的共同经历，而不是靠换人找刺激"]],
+        ["要警惕", "总在追火花，容易把「不安」误当成「爱得深」。"]
+      ],
+      match:{ best:"愿意陪你一起折腾的烟火型——两个人都怕无聊，反而合拍。", worst:"港湾型——TA 想要安稳日子，你嫌闷得慌。" },
+      quote:"别把心跳漏掉的那一下，当成爱。" },
+    co: { glyph:"🧭", code:"NO.32 · 同盟型", name:"同行型", tag:"要一个能并肩的人",
+      portrait:"你要的不只是恋人，更是战友。你希望对方懂你的野心，也接得住你的疲惫；你们能聊到一块去，也能一起往前走。你要的是「我们」比「我」更大。",
+      detail:[
+        ["你平时会这样", ["三观一致比外表更重要","喜欢和对方聊想法、聊未来","会评估「这个人能不能一起成长」","受不了停滞和将就"]],
+        ["为什么会这样", "你把关系当成一段共同的旅程，方向一致，才有一起走远的力气。"],
+        ["怎么对自己更好", ["别把关系经营成项目，偶尔也要允许纯粹的开心","记得对方不是你的进度条"]],
+        ["要警惕", "只谈未来的关系，容易忘了当下这个人是否让你舒服。"]
+      ],
+      match:{ best:"同频的同行型——你们能一起往前跑，还不觉得累。", worst:"烟火型——你觉得 TA 太跳，TA 觉得你太严肃。" },
+      quote:"你要的不只是恋人，是战友。" },
+    br: { glyph:"🌿", code:"NO.33 · 自由型", name:"自在型", tag:"要一个不困住我的人",
+      portrait:"你最怕被关系困住。你要的是那种可以亲密、也可以各自忙碌的人——不用报备，不用解释，彼此信任又各自完整。距离对你不是疏远，是呼吸。",
+      detail:[
+        ["你平时会这样", ["需要自己的空间，讨厌被查岗","喜欢「不用装」的松弛感","独处时最有能量","讨厌黏人和控制"]],
+        ["为什么会这样", "对你来说，爱的底色是自由——被信任时才敢靠近，被抓紧时就想跑。"],
+        ["怎么对自己更好", ["把「我需要空间」说出来，别用消失表达","别把「自由」当借口，回避所有需要你的时刻"]],
+        ["要警惕", "一味要自由，容易错过那些值得你让出一点空间的人。"]
+      ],
+      match:{ best:"边界感一致的自在型——你们各自完整，又愿意靠近。", worst:"港湾型——TA 的亲密，对你像一根绳子。" },
+      quote:"距离不是不爱，是你的呼吸方式。" }
+  },
+  cta: {
+    eyebrow: "想知道怎么挑对人？",
+    title: "《亲密关系》和《幸福的婚姻》，我读完了",
+    lead: "选对人，比拼命经营更省力——这两本书讲的正是「怎么辨认、怎么经营」，我把它们做成了可直接查的拆书稿：",
+    items: [
+      "《亲密关系》——关系里的期待、冲突与修复",
+      "《幸福的婚姻》——长期关系怎么经营才不烂尾",
+      "《读懂恋人心》——怎么按依恋类型筛人、怎么看行为不听解释",
+      "含「结论速查」，每条独立可引用"
+    ],
+    foot: "想要完整精华 → <b>评论区扣「图鉴」</b>，或私信我。<br>（这一行请替换成你自己的店铺 / 联系方式）"
+  },
+  questions: [
+    { tag:"第 1 题 · 看重", text:"一段关系里，你最看重的是？",
+      opts:[ {label:"踏实、可靠", scores:{ha:2}}, {label:"心动、有趣", scores:{fw:2}}, {label:"想法一致、能一起成长", scores:{co:2}}, {label:"彼此自由、不互相干涉", scores:{br:2}} ] },
+    { tag:"第 2 题 · 被爱", text:"怎样最让你感到「被爱」？",
+      opts:[ {label:"TA 记得我的小事，一直都在", scores:{ha:2}}, {label:"TA 制造惊喜，让我心动", scores:{fw:2}}, {label:"TA 认真听我说想法", scores:{co:2}}, {label:"TA 尊重我的独处时间", scores:{br:2}} ] },
+    { tag:"第 3 题 · 平淡", text:"关系进入平淡期，你的反应是？",
+      opts:[ {label:"平淡才是真的，挺好", scores:{ha:2}}, {label:"会慌，想找回那种感觉", scores:{fw:2}}, {label:"会想一起做点新的事情", scores:{co:2}}, {label:"反而松了口气", scores:{br:2}} ] },
+    { tag:"第 4 题 · 受不了", text:"你最受不了对方？",
+      opts:[ {label:"忽冷忽热、态度不明", scores:{ha:2}}, {label:"无聊、没有意思", scores:{fw:2}}, {label:"不上进、聊不到一起", scores:{co:2}}, {label:"黏人、处处控制", scores:{br:2}} ] },
+    { tag:"第 5 题 · 理想的一天", text:"和喜欢的人，理想的一天是？",
+      opts:[ {label:"在家一起做饭、看剧", scores:{ha:2}}, {label:"说走就走，去没去过的地方", scores:{fw:2}}, {label:"一起做一件有目标的事", scores:{co:2}}, {label:"各忙各的，晚上分享彼此一天", scores:{br:2}} ] },
+    { tag:"第 6 题 · 留下", text:"你会因为什么留在一段关系里？",
+      opts:[ {label:"TA 让我安心", scores:{ha:2}}, {label:"TA 让我心动", scores:{fw:2}}, {label:"TA 让我变好", scores:{co:2}}, {label:"TA 让我做自己", scores:{br:2}} ] },
+    { tag:"第 7 题 · 未来", text:"关于「未来」这件事，你的态度是？",
+      opts:[ {label:"希望能看到明确的未来", scores:{ha:2}}, {label:"不想太远，先享受当下", scores:{fw:2}}, {label:"希望一起规划、一起实现", scores:{co:2}}, {label:"希望各自有自己的方向", scores:{br:2}} ] },
+    { tag:"第 8 题 · 吵架后", text:"吵架之后，你希望对方？",
+      opts:[ {label:"先来哄我、给个明确态度", scores:{ha:2}}, {label:"用点新鲜的方式和好", scores:{fw:2}}, {label:"能和我理性聊清楚", scores:{co:2}}, {label:"各自冷静，别逼我立刻解决", scores:{br:2}} ] },
+    { tag:"第 9 题 · 角色", text:"在关系里，你更常扮演？",
+      opts:[ {label:"照顾者，让对方安心", scores:{ha:2}}, {label:"点燃者，让关系有趣", scores:{fw:2}}, {label:"搭档，一起扛事", scores:{co:2}}, {label:"独立者，各自精彩", scores:{br:2}} ] },
+    { tag:"第 10 题 · 一句话", text:"哪句话最能形容你要的爱情？",
+      opts:[ {label:"「一直都在」", scores:{ha:2}}, {label:"「永远心动」", scores:{fw:2}}, {label:"「一起成长」", scores:{co:2}}, {label:"「彼此自由」", scores:{br:2}} ] },
+    { tag:"第 11 题 · 安全感", text:"什么最能让你在关系里安心？",
+      opts:[ {label:"TA 每天都会找我，从不消失", scores:{ha:2}}, {label:"TA 常常给我小惊喜", scores:{fw:2}}, {label:"我们能聊很深的话题", scores:{co:2}}, {label:"TA 从不追问我在干什么", scores:{br:2}} ] },
+    { tag:"第 12 题 · 冷战", text:"冷战了三天，你更希望？",
+      opts:[ {label:"对方先低头，给个台阶", scores:{ha:2}}, {label:"来点刺激的，反而更快和好", scores:{fw:2}}, {label:"坐下来把问题说清楚", scores:{co:2}}, {label:"别来烦我，我需要自己待会儿", scores:{br:2}} ] },
+    { tag:"第 13 题 · 最想要的感觉", text:"关系里，你最想要的那种感觉是？",
+      opts:[ {label:"安心", scores:{ha:2}}, {label:"心动", scores:{fw:2}}, {label:"被理解", scores:{co:2}}, {label:"自由", scores:{br:2}} ] },
+    { tag:"第 14 题 · 最怕", text:"长期关系里，你最怕的是？",
+      opts:[ {label:"有一天 TA 不在了", scores:{ha:2}}, {label:"变得一点激情都没有", scores:{fw:2}}, {label:"一个人在往前走，另一个停在原地", scores:{co:2}}, {label:"被绑住，失去自己", scores:{br:2}} ] }
+  ]
+};
+</script>
+<script src="assets/quiz.js"></script>
+</body>
+</html>
